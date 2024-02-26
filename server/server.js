@@ -56,60 +56,28 @@ app.post("/create-checkout-session", async (req, res) => {
       custom_fields: [{
         // Custom fields if needed
       }],
-      success_url: CLIENT_URL + `/success`,
+      success_url: CLIENT_URL + `/success?${new URLSearchParams(formData).toString()}`,
       cancel_url: CLIENT_URL + `/shop`,
     });
 
+    res.json({ url: session.url });
 
-    // DECREASES THE STOCK BY 1
+    // Code after redirection
+    // Decrease stock
+    await fetch('http://localhost:4000/decrease-stock', {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ product_name: formData.item_type, size: formData.size })
+    });
 
-    try {
-        const product_name = formData.item_type
-        const size = formData.size
-        const response = await fetch('http://localhost:4000/decrease-stock', {
-            method: 'PUT',
-            headers: {'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ product_name, size })
-        });
-        // check for errors
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.error);
-        }
-        const responseData = await response.json();
-        console.log(responseData.message); // Log success message
+    // Add customer
+    await fetch('http://localhost:4000/customers', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(formData)
+    });
 
-
-          // HERE IT ADDS A CUSTOMER INTO THE CUSTOMERS TABLE 
-          // ONLY IF STOCK IS DECREASED IT CREATES A NEW CUSTOMER
-          
-        try {
-            console.log('\nSending POST request to server'); // Log a message before sending the POST request
-            const response = await fetch('http://localhost:4000/customers', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json', // Set Content-Type header
-                },
-                body: JSON.stringify(formData), // Convert form data to JSON
-            });
-            console.log('POST request sent successfully'); // Log a message after successfully sending the POST request
-            // check for errors
-            if (!response.ok) {
-                const json = await response.json();
-                throw new Error(json.error);
-            }
-            console.log('Data added successfully'); // Data successfully added to the database
-        } catch (error) {
-            console.error('Error adding data:', error);
-        }
-      
-    } catch (error) {
-        console.error('Error decreasing stock:', error.message);
-    }
-
-
-    // SENDING EMAILS TO US AND THE CLIENT
-
+    // Sending emails
     // Send email to the client
     const mailOptions = {
       from: MAIL,
@@ -117,7 +85,7 @@ app.post("/create-checkout-session", async (req, res) => {
       subject: 'Order Confirmation',
       text: 'Thank you very much for the shop.'
     };
-    
+
     transporter.sendMail(mailOptions, function(error, info) {
       if (error) {
         console.error('Error sending email:', error);
@@ -126,23 +94,22 @@ app.post("/create-checkout-session", async (req, res) => {
       }
     });
 
-    // // Send email to us
-    // const mailOptionsForBuffas = {
-    //   from: process.env.MAIL,
-    //   to: process.env.MAIL,
-    //   subject: 'Order Confirmation',
-    //   text: 'Thank you very much for the shop.'
-    // };
-    
-    // transporter.sendMail(mailOptionsForBuffas, function(error, info) {
-    //   if (error) {
-    //     console.error('Error sending email:', error);
-    //   } else {
-    //     console.log('Email sent:', info.response);
-    //   }
-    // });
+    // Send email to us
+    const mailOptionsForBuffas = {
+      from: MAIL,
+      to: MAIL,
+      subject: 'Order Confirmation',
+      text: 'Thank you very much for the shop.'
+    };
 
-    res.json({ url: session.url });
+    transporter.sendMail(mailOptionsForBuffas, function(error, info) {
+      if (error) {
+        console.error('Error sending email:', error);
+      } else {
+        console.log('Email sent:', info.response);
+      }
+    });
+
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
@@ -188,7 +155,6 @@ app.put('/decrease-stock', (req, res) => {
 
   // Check the current stock before updating
   connection.query(process.env.MYSQL_GET_STOCK, [product_name, size], (error, results) => {
-      console.log(product_name, size)
       if (error) {
           console.error('Error getting stock:', error);
           res.status(500).json({ error: 'An error occurred while fetching stock' });
