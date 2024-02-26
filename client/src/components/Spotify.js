@@ -20,7 +20,9 @@ const Spotify = () => {
     <div id='spotify-body'>
       <button className="tr-cube-button" onClick={goToHomePage}> </button>
       <div id = 'spotify-container'>
-        <div id='spotify-image' onClick={goToSpotify}></div>
+        <div id='spotify-image' onClick={goToSpotify}>
+          <img id="spot-image" src="foto_perfil.png" alt="Caratula de playlist" />
+        </div>
         <p id='spotify-text'>On the meantime check out our playlists in different platforms!</p>
         <button id='spotify-button' className='buffas-themed-button'>
           <a href="https://open.spotify.com/playlist/4CVmWl6DWvONnNvkoqG1au?si=22c325389e7c46ab" target="_blank" rel="noopener noreferrer">

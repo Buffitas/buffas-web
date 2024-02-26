@@ -97,7 +97,6 @@ const Checkout = () => {
     setFormData({ ...formData, [name]: value.trim() });
 }
   const handleCountryChange = (event) => {
-    setSelectedCountry(event.target.value);
     setFormData({ ...formData, country: event.target.value }); // Update formData with selected country
   };
 
@@ -106,7 +105,6 @@ const Checkout = () => {
 
   const [countries, setCountries] = useState([]);
 
-  const [selectedCountry, setSelectedCountry] = useState('');
   useEffect(() => {
     fetch('https://restcountries.com/v3.1/all')
       .then(response => {
@@ -192,7 +190,6 @@ const Checkout = () => {
   };
 
 
-
   // HERE GO ALL THE MYSQL REQUESTS
 
   // // Decrease the stock once an item is purchased
@@ -262,7 +259,6 @@ const Checkout = () => {
       console.error('Error retrieving stock information:', error.message);
   }
   }
-
 
 
   // LOGIC FOR THE PAYMENT REDIRECTION

@@ -28,10 +28,15 @@
     align-items: center;
     width: 350px;
     height: 350px;
-    border-radius: 5%;
-    background-image: url(../../../resources/foto_perfil.png);
-    background-size: 100%, 100%;
 }
+
+#spot-image {
+    width: 100%; /* Set the width of the image to 100% */
+    height: auto; /* Let the height adjust proportionally */
+    display: block; /* Ensure the image behaves as a block element */
+    border-radius: 12%;
+  }
+
 
 #spotify-text{
     color: white;

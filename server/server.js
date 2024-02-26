@@ -10,6 +10,10 @@ const CLIENT_URL = process.env.CLIENT_URL
 const MAIL = process.env.MAIL
 
 const app = express();
+
+
+// PAYMENTS
+
 app.use(cors({
   origin: CLIENT_URL
 }));
@@ -23,19 +27,9 @@ const storeItems = new Map([
   [3, {  name: "Buffas hoodie  XL", priceInCents: 3500 }],
 ]);
 
-const transporter = nodemailer.createTransport({
-  service: 'Gmail',
-  auth: {
-    user: MAIL,
-    pass: process.env.MAIL_APP_PASSWORD // Use an app password if 2-factor authentication is enabled
-  }
-});
-
 app.post("/create-checkout-session", async (req, res) => {
   try {
-    console.log(req.body.items)
-    const formData = req.body.formData
-    console.log(formData)
+    const formData = req.body
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
@@ -62,55 +56,6 @@ app.post("/create-checkout-session", async (req, res) => {
 
     res.json({ url: session.url });
 
-    
-    // Code after redirection
-    // Decrease stock
-    await fetch('http://localhost:4000/decrease-stock', {
-      method: 'PUT',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ product_name: formData.item_type, size: formData.size })
-    });
-
-    // Add customer
-    await fetch('http://localhost:4000/customers', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(formData)
-    });
-
-    // Sending emails
-    // Send email to the client
-    const mailOptions = {
-      from: MAIL,
-      to: formData.email,
-      subject: 'Order Confirmation',
-      text: 'Thank you very much for the shop.'
-    };
-
-    transporter.sendMail(mailOptions, function(error, info) {
-      if (error) {
-        console.error('Error sending email:', error);
-      } else {
-        console.log('Email sent:', info.response);
-      }
-    });
-
-    // Send email to us
-    const mailOptionsForBuffas = {
-      from: MAIL,
-      to: MAIL,
-      subject: 'Order Confirmation',
-      text: 'Thank you very much for the shop.'
-    };
-
-    transporter.sendMail(mailOptionsForBuffas, function(error, info) {
-      if (error) {
-        console.error('Error sending email:', error);
-      } else {
-        console.log('Email sent:', info.response);
-      }
-    });
-
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
@@ -118,12 +63,10 @@ app.post("/create-checkout-session", async (req, res) => {
 
 
 
+// MYSQL REQUEST
 
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
-
-
-// MYSQL REQUEST
 
 // create mysql conection 
 const connection = mysql.createConnection({
@@ -135,24 +78,14 @@ const connection = mysql.createConnection({
 
 app.use(bodyParser.json());
 
-app.post('/customers', (req, res) => {
-  const { name, surname, email, city, country, post_code, street, flat, item_type, size } = req.body;
+// Mysql calls to the server
+app.put('/handle-purchase', (req, res) => {
+  const formData = req.body;
+  const product_name = formData.item_type;
 
+  const { name, surname, email, city, country, post_code, street, flat, item_type, size } = formData;
   const values = [name, surname, email, city, country, post_code, street, flat, item_type, size];
 
-  connection.query(process.env.MYSQL_POST, values, (error, results) => {
-    if (error) {
-      console.error('Error inserting data:', error);
-      res.status(500).json({ error: 'An error occurred while inserting data' });
-    } else {
-      console.log('Data inserted successfully:', results);
-      res.status(200).json({ message: 'Data inserted successfully' });
-    }
-  });
-});
-
-app.put('/decrease-stock', (req, res) => {
-  const { product_name, size } = req.body;
 
   // Check the current stock before updating
   connection.query(process.env.MYSQL_GET_STOCK, [product_name, size], (error, results) => {
@@ -161,26 +94,32 @@ app.put('/decrease-stock', (req, res) => {
           res.status(500).json({ error: 'An error occurred while fetching stock' });
       } else {
           if (results.length === 0 ) {
-              // If no stock information is found or the stock is already <= 5, do not update
-              res.status(400).json({ error: 'There is no such a size' });}
-          else if (results[0].stock_quantity <= 7){
-            res.status(400).json({ error: 'Stock is already 7 or less' });
-          
+                // If no stock information is found or the stock is already <= 5, do not update
+                console.error('There is not enough stock:', error);
+                res.status(400).json({ error: 'There is no such a size' });}
+          else if (results[0].stock_quantity > 10){
+
+                res.status(400).json({ error: 'Stock is already 0 or less' });
           } else {
-              // Proceed with the update
+
+              // Proceed with the update in the stock
               connection.query(process.env.MYSQL_PUT, [product_name, size], (error, results) => {
                   if (error) {
                       console.error('Error updating stock:', error);
                       res.status(500).json({ error: 'An error occurred while updating stock' });
                   } else {
-                      if (results.affectedRows === 0) {
-                          // If no rows were affected, it means the product with the given name and size doesn't exist
-                          res.status(404).json({ error: 'Product not found' });
-                      } else {
-                          // Success message
-                          console.log('Stock retrieved successfully:', results);
-                          res.status(200).json({ message: 'Stock updated successfully' });
-                      }
+                      console.log('Stock updated successfully:', results);
+                          
+                      // Create a new customer information tuple
+                      connection.query(process.env.MYSQL_POST, values, (error, results) => {
+                        if (error) {
+                          console.error('Error inserting data:', error);
+                          res.status(500).json({ error: 'An error occurred while inserting data' });
+                        } else {
+                          console.log('Data inserted successfully:', results);
+                          res.status(200).json({ message: 'Data inserted successfully' });
+                        }
+                      });
                   }
               });
           }
@@ -208,23 +147,48 @@ app.get('/get-stock', (req, res) => {
   });
 });
 
-app.post('/send-mail', (req, res) => {
-  try {
-    
+const transporter = nodemailer.createTransport({
+  service: 'Gmail',
+  auth: {
+    user: MAIL,
+    pass: process.env.MAIL_APP_PASSWORD // Use an app password if 2-factor authentication is enabled
+  }
+});
 
-    // Sending email
-    const mailOptionsForBuffas = {
+app.post('/send-email', (req, res) => {
+  try {
+
+    const buyerMail = req.body.email;
+    
+    // // Sending email to ourselves
+    // const mailDetailsForUs = {
+    //   from: MAIL,
+    //   to: MAIL,
+    //   subject: 'Order Confirmation',
+    //   text: 'Thank you very much for the shop.'
+    // };
+    
+    // transporter.sendMail(mailDetailsForUs, function(error, info) {
+    //   if (error) {
+    //     console.error('Error sending email to yourself:', error);
+    //   } else {
+    //     console.log('Email sent to yourself:', info.response);
+    //   }
+    // });
+
+    // Sending email to the customer
+    const mailDetailsForBuyer = {
       from: MAIL,
-      to: MAIL,
+      to: buyerMail,
       subject: 'Order Confirmation',
       text: 'Thank you very much for the shop.'
     };
     
-    transporter.sendMail(mailOptionsForBuffas, function(error, info) {
+    transporter.sendMail(mailDetailsForBuyer, function(error, info) {
       if (error) {
-        console.error('Error sending email:', error);
+        console.error('Error sending email to buyer:', error);
       } else {
-        console.log('Email sent:', info.response);
+        console.log('Email sent to buyer:', info.response);
       }
     });
 
