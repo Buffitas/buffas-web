@@ -1,0 +1,24 @@
+.subscription-body {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
+    height: 100vh; /* Optionally, make the container full viewport height */
+    font-family: 'Trade Gothic W02 Bold Cn 20','sans-serif';
+  }
+
+.subscription-title{
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+.subscription-button {
+    text-decoration: none;
+    background-color: white;
+    color: black;
+    border-radius: 25px;
+    border: 2px solid #000;
+    cursor: pointer;
+    left: 10px;
+    position: relative;
+  }

@@ -1,0 +1,19 @@
+#small-title-privacy{
+    color: black;
+    font-size: 23px;
+    border-bottom: 20px;
+}
+
+#privacy-policy-container{
+    margin-top: 40px;
+    justify-content: center;
+    display: flex;
+    font-family: 'Trade Gothic W02 Bold Cn 20','sans-serif';
+    display: flex;
+    margin-bottom: 70px;
+}
+
+#understood-policy-btn{
+    background-color: #0073ee;
+    margin-top: 40px;
+}

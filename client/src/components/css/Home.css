@@ -1,0 +1,100 @@
+.home-button {
+  padding: 10px 20px;
+  background-color: transparent;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-family: 'Trade Gothic W02 Bold Cn 20','sans-serif';
+  text-decoration: none;
+  font-size: 25px;
+}
+
+.tl-cube-button {
+  padding: 10px 20px;
+  border: none;
+  height: 39px;
+  top: 20px;
+  left: 20px;
+  position: fixed;
+  background-color: transparent;
+  background-image: url(../../../resources/home_cube_black.png);
+  background-size: 100%, 100%;
+}
+
+.tr-cube-button {
+  padding: 10px 20px;
+  border: none;
+  height: 39px;
+  top: 20px;
+  right: 20px;
+  position: fixed;
+  background-color: transparent;
+  background-image: url(../../../resources/home_cube_white.png);
+  background-size: 100%, 100%;
+}
+
+.buffas-themed-button{
+  padding: 10px 20px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-family: 'Trade Gothic W02 Bold Cn 20','sans-serif';
+  text-decoration: none;
+  font-size: 18px;
+  border-radius: 25px ;
+}
+
+#top-left-button {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+
+#top-right-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+#bottom-left-button {
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+}
+
+#bottom-right-button {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+}
+
+#model-container {
+  height: 80%;
+  width: 80%;
+  margin: auto;
+}
+
+#home-body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  height: 100vh;
+  background-color: black;
+}
+@media screen and (max-width: 540px) {
+
+  .home-button {
+    font-size: 18px;
+  }
+
+  .buffas-themed-button{
+    font-size: 15px;
+  }
+}
+@media screen and (min-width: 540px) and (max-width: 1024px) {
+}
+
+@media screen and (min-width: 1240px) {
+}

@@ -1,0 +1,19 @@
+/* ImageGallery.css */
+@media screen and (max-width: 540px) {
+  .slider-container {
+    width: 100%; /* Set the width to 50% of the container */
+    height: 300px; /* Set the height of the container */
+  }
+}
+
+
+.slick-slider {
+  width: 100%; /* Make the slider fill the container width */
+  height: 100%; /* Make the slider fill the container height */
+}
+
+.slick-slide img {
+  width: 100%; /* Make the image width fill the slide width */
+  height: 100%; /* Make the image height fill the slide height */
+  object-fit: contain; /* Fit the image while maintaining aspect ratio */
+}

@@ -1,0 +1,81 @@
+#spotify-body{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(to bottom, rgb(67, 0, 147), rgb(31, 1, 63));
+    z-index: -1; /* Coloca el fondo detrás del contenido */
+    font-family: 'Trade Gothic W02 Bold Cn 20','sans-serif';
+
+  
+}
+
+#spotify-container{
+
+    display: flex;
+    flex-direction: column; /* Organiza los elementos en columnas */
+    justify-content: center; /* Centra verticalmente los elementos */
+    align-items: center; /* Centra horizontalmente los elementos */
+    min-height: 100vh;
+}
+
+
+
+#spotify-image{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 350px;
+    height: 350px;
+    border-radius: 5%;
+    background-image: url(../../../resources/foto_perfil.png);
+    background-size: 100%, 100%;
+}
+
+#spotify-text{
+    color: white;
+    text-align: center;
+}
+
+#spotify-button{
+    text-decoration: none;
+    color: white;
+    background-color: #1DB954;
+    font-size: 20px;
+}
+
+#spotify-button a {
+    text-decoration: none;
+    color: white;
+}
+
+#apple-button{
+    margin-top: 10px;
+    text-decoration: none;
+    color: white;
+    background-color: #FC3C44;
+    font-size: 20px;
+}
+
+#apple-button a {
+    text-decoration: none;
+    color: white;
+}
+
+@media screen and (max-width: 540px) {
+    #apple-button{
+        font-size: 15px;
+    }
+    #spotify-button{
+        font-size: 15px;
+    }
+}
+
+@media screen and (min-width: 540px) and (max-width: 1024px) {
+
+}
+
+@media screen and (min-width: 1240px) {
+
+}

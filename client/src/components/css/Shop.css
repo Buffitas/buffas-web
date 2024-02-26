@@ -1,0 +1,224 @@
+
+/* For Mobile */
+@media screen and (max-width: 540px) {
+  #shop-body {
+    padding-top: 20px;
+    height: 100vh;
+    font-family: 'Trade Gothic W02 Bold Cn 20','sans-serif';
+  }
+  #shop-title {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    text-align: center; /* Center the title */
+    letter-spacing: 9px;
+  }
+
+
+  .letter{
+    font-size: 40px;
+  }
+
+  .shop-info {
+    display: flex; /* Use flexbox */
+    flex-direction: column; /* Align children vertically */
+    align-items: center; /* Align children at the center horizontally */
+  }
+  
+  #shop-layout{
+    width:100%;
+  }
+
+  .shop-hoodie-info{
+    padding-top: 110px;
+    padding-left: 20px;
+    width:80vw;
+    padding-bottom: 80px;
+  }
+
+  #buy-button{
+    bottom: 30px;
+    background-color: rgb(0, 98, 255);
+    position: fixed;
+    font-size: 15px;
+  }
+  
+  .toggle-button{
+    text-decoration: none;
+    color: black;
+  }
+  
+  
+  .material-symbols-outlined{
+    position: absolute;
+    color: gray;
+    right: 15px;
+  }
+  
+  /* Add these styles to your CSS file */
+  .shop-toggle-section{
+    padding: 15px; /* Increase padding to make the sections larger */
+
+    padding-left: 20px; /* Increase padding to make the sections larger */
+    cursor: pointer;
+    width: 95%;
+    border-top: 1px solid #ddd; /* Add a top border to the first toggle section */
+  
+    /*border: 1px solid #ddd; /* Add a border for separation */
+  }
+  .toggle-content {
+    display: block; /* Keep the content hidden by default */
+    padding: 10px; /* Add padding to the content */
+  }
+
+  #sizes-table-image {
+    max-width: 100%; /* Ensure the image doesn't exceed its container */
+    max-height: 100%; /* Ensure the image doesn't exceed its container */
+  }
+  .center-buy-button {
+    display: flex;
+    justify-content: center;
+  }
+
+}
+
+
+/* For Tablets */
+@media screen and (min-width: 540px) and (max-width: 1024px) {
+  #shop-body {
+    padding-top: 20px;
+    height: 100vh;
+    font-family: 'Trade Gothic W02 Bold Cn 20','sans-serif';
+    font-size: 25px;
+  }
+
+  #shop-title {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    font-size: 40px;
+    text-align: center; /* Center the title */
+    letter-spacing: 9px;
+  }
+
+  #shop-layout{
+    width:100%;
+  }
+
+  .shop-hoodie-info{
+    padding-left: 20px;
+    width:90vw;
+    padding-bottom: 70px;
+  }
+
+  #buy-button{
+    bottom: 30px;
+    background-color: rgb(0, 98, 255);
+    position: fixed;
+    font-size: 20px;
+  }
+
+  .toggle-button{
+    text-decoration: none;
+    color: black;
+  }
+  
+  .material-symbols-outlined{
+    position: absolute;
+    color: gray;
+    right: 15px;
+  }
+  
+  /* Add these styles to your CSS file */
+  .shop-toggle-section{
+    padding: 15px; /* Increase padding to make the sections larger */
+    padding-left: 20px; /* Increase padding to make the sections larger */
+    cursor: pointer;
+    width: 95%;
+    border-top: 1px solid #ddd; /* Add a top border to the first toggle section */
+  }
+
+  .toggle-content {
+    display: block; /* Keep the content hidden by default */
+    padding: 10px; /* Add padding to the content */
+  }
+
+  .image-thing {
+    max-width: 100%; /* Ensure the image doesn't exceed its container */
+    max-height: 100%; /* Ensure the image doesn't exceed its container */
+  }
+}
+
+
+@media screen and (min-width: 1024px) {
+  #shop-body {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px; /* Add padding as needed */
+    font-family: 'Trade Gothic W02 Bold Cn 20','sans-serif';
+    font-size: 20px;
+  }
+
+  #shop-layout {
+    display: flex;
+  }
+
+  #shop-title {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    font-size: 40px;
+    text-align: center; /* Center the title */
+    letter-spacing: 9px;
+  }
+
+  .shop-image-gallery,
+  .shop-hoodie-info {
+    width: 50%;
+    box-sizing: border-box;
+    padding: 10px; /* Add padding as needed */
+  }
+
+  #buy-button{
+    bottom: 30px;
+    background-color: rgb(0, 98, 255);
+    position: fixed;
+  }
+
+  /* Add these styles to your CSS file */
+  .shop-toggle-section{
+    padding: 15px; /* Increase padding to make the sections larger */
+    cursor: pointer;
+    border-top: 1px solid #ddd; /* Add a top border to the first toggle section */
+
+    /*border: 1px solid #ddd; /* Add a border for separation */
+  }
+  .toggle-content {
+    display: block; /* Keep the content hidden by default */
+    padding: 10px; /* Add padding to the content */
+  }
+
+  .material-symbols-outlined{
+    position: absolute;
+    color: gray;
+    right: 15px;
+  }
+    
+  #center-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #sizes-table-image {
+      max-width: 70%; /* Ensure the image doesn't exceed its container */
+      max-height: 70%; /* Ensure the image doesn't exceed its container */
+  }
+
+}
+
+
+#center-buy-button {
+  display: flex;
+  justify-content: center;
+}

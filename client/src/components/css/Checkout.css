@@ -1,0 +1,133 @@
+
+#form-container{
+  margin-top: 40px;
+  justify-content: center;
+  display: flex;
+  font-family: 'Trade Gothic W02 Bold Cn 20','sans-serif';
+  display: flex;
+}
+
+#checkboxes-container{
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+#title-container{
+  left: 0;
+  display: flex;
+}
+
+#page-title{
+  font-size: 30px;
+}
+
+.form-input-total{
+  margin-top: 5px;
+  width: 100%;
+  height: 25px;
+}
+
+.form-input-half{
+  margin-top: 5px;
+  width: 100%;
+  height: 25px;
+}
+
+.unite-fields{
+  margin-top: 10px;
+  display: flex;
+}
+
+.form-label{
+  font-size: 19px;
+}
+
+#submit-form-button{
+  background-color: #0073ee;
+  margin-top: 30px;
+}
+
+#info-button{
+  border: none;
+  background: none;
+  font-size: 30px;
+  color: gray;
+  margin-left: 15px;
+  margin-top: 15px;
+}
+
+input{
+  font-family: monospace;
+}
+
+.error-message { 
+  font-size: 13px;
+  color: red
+}
+
+/* Here is the css for the modal object */
+.popup-content { 
+  background: white;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  font-family: 'Trade Gothic W02 Bold Cn 20','sans-serif';
+  width: 50%;
+}
+
+.popup-content-small { 
+  background: white;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  font-family: 'Trade Gothic W02 Bold Cn 20','sans-serif';
+}
+
+.pop-up-text{
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.modalbutton{
+  padding: 10px 20px;
+  text-decoration: none;
+  border: 2px solid #000;
+  padding: 10px 20px;
+  position: relative;
+  cursor: pointer;
+  font-size: 18px;
+  font-family: 'Trade Gothic W02 Bold Cn 20','sans-serif';
+  text-decoration: none;
+  border-radius: 25px;
+}
+
+#modal-stay-button-info{
+  background-color: black;
+  color: white;
+}
+
+#modal-stay-button{
+  background-color: black;
+  color: white;
+  left: -45px;
+}
+
+#modal-home-button{
+  background-color: white;
+  left: 45px;
+}
+
+#modal-stay-button:hover{
+  background-color: #0073ee;
+  color: white;
+  border: 2px solid #0073ee;
+}
+
+#modal-home-button:hover{
+  background-color: #0073ee;
+  color: white;
+  border: 2px solid #0073ee;
+}
