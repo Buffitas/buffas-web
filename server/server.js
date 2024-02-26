@@ -62,6 +62,7 @@ app.post("/create-checkout-session", async (req, res) => {
 
     res.json({ url: session.url });
 
+    
     // Code after redirection
     // Decrease stock
     await fetch('http://localhost:4000/decrease-stock', {
