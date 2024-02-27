@@ -15,18 +15,16 @@ const Checkout = () => {
   const sizeQueryParam = new URLSearchParams(location.search).get('size');
   const size = sizeQueryParam || 'No size'; // Provide a default size if none is specified
 
+
+  // ***TBD***
+  // PAYMENT PROTECTION 1 (if there is no stock available redirect)
+
   // Redirect to shop page if size is not found
   useEffect(() => {
     if (!sizeQueryParam || !['M', 'L', 'XL'].includes(size)) {
       navigate('/shop');
     }
   }, [navigate, sizeQueryParam, size]);
-
-  const storeMapIds = new Map([
-    ['M', 1],
-    ['L', 2],
-    ['XL', 3],
-  ]);
 
 
   // HERE GOES THE REDIRECTION FOR THE DATA PRIVACY
@@ -37,6 +35,7 @@ const Checkout = () => {
   const gotoDataPrivacyEnPage = () => {
     navigate(`/data-privacy-en?size=${size}`);
   }
+
 
   // HERE GOES THE LOGIC FOR THE MODALS
 
@@ -64,7 +63,7 @@ const Checkout = () => {
   };
 
 
-  // HERE IS THE CODE FOR THE WORKING OF THE FORM
+  // CODE FOR THE WORKING OF THE FORM
 
   // Define FormData
   const [formData, setFormData] = useState({
@@ -101,8 +100,6 @@ const Checkout = () => {
   };
 
   const [incompleteFields, setIncompleteFields] = useState({});
-
-
   const [countries, setCountries] = useState([]);
 
   useEffect(() => {
@@ -130,7 +127,6 @@ const Checkout = () => {
     setFormData({ ...formData, checked_data_privacy: e.target.checked });
   };
 
-
   const validateForm = (formData) => {
     const incomplete = {};
     const errors = [];
@@ -151,7 +147,6 @@ const Checkout = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-
     // raise error if information about the delivery has been accepted
     if (formData.checked_info === false) {
       alert('Please check info box');
@@ -170,113 +165,73 @@ const Checkout = () => {
       return;
     }
 
-
-    // // Reset the form data
-    // setFormData({
-    //     name: '',
-    //     surname: '',
-    //     email: '',
-    //     city: '',
-    //     country: '',
-    //     post_code: '',
-    //     street: '',
-    //     flat: '',
-    //     item_type: 'buffas_hoodie',
-    //     size: size,
-    //     checked_info: false,
-    //     checked_data_privacy: false,
-    // });
     goToPaymentPage(formData)
   };
 
 
   // HERE GO ALL THE MYSQL REQUESTS
 
-  // // Decrease the stock once an item is purchased
-  // const decreaseStock = async (product_name, size) => {
-  //     try {
-  //         const response = await fetch('http://localhost:4000/decrease-stock', {
-  //             method: 'PUT',
-  //             headers: {
-  //                 'Content-Type': 'application/json'
-  //             },
-  //             body: JSON.stringify({ product_name, size })
-  //         });
-  
-  //         if (!response.ok) {
-  //             const errorData = await response.json();
-  //             throw new Error(errorData.error);
-  //         }
-  
-  //         const responseData = await response.json();
-  //         console.log(responseData.message); // Log success message
-  //     } catch (error) {
-  //         console.error('Error decreasing stock:', error.message);
-  //     }
-  // };
+  // Handle purchase 
+  const handlePurchase = async () => {
+      try {
+          console.log('handle purchase function called with', JSON.stringify(formData))
+          const response = await fetch('http://localhost:4000/handle-purchase', {
+              method: 'PUT',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(formData)
+          });
 
-  // // // Retrieve stock information for a given product and size
-  // // const getStock = async (product_name, size) => {
-  // //   try {
-  // //       const queryString = `?product_name=${encodeURIComponent(product_name)}&size=${encodeURIComponent(size)}`;
-  // //       const response = await fetch(`http://localhost:4000/get-stock${queryString}`, {
-  // //           method: 'GET',
-  // //           headers: {
-  // //               'Content-Type': 'application/json'
-  // //           }
-  // //       });
-
-  // //       if (!response.ok) {
-  // //           const errorData = await response.json();
-  // //           throw new Error(errorData.error);
-  // //       }
-
-  // //       const stockData = await response.json();
-  // //       console.log(`Stock information retrieved, for size ${size},`, stockData.stockQuantity, `units.`); // Log stock information
-  // //       //console.log(stockData)
-  // //       return stockData.stockQuantity;
-  // //   } catch (error) {
-  // //       console.error('Error retrieving stock information:', error.message);
-  // //   }
-  // // };
-
-  const helper_button = async (event) => {
-    try {
-      const response = await fetch(`http://localhost:4000/send-mail`, {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
+          if (!response.ok) {
+              const errorData = await response.json();
+              throw new Error(errorData.error);
           }
-      });
 
-      if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.error);
+          const responseData = await response.json();
+          console.log(responseData.message); // Log success message
+      } catch (error) {
+          console.error('Error decreasing stock:', error.message);
       }
+  };
 
-      return true;
-  } catch (error) {
-      console.error('Error retrieving stock information:', error.message);
-  }
+  const sendEmail = async () => {
+      try {
+          const response = await fetch('http://localhost:4000/send-email', {
+              method: 'POST',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify(formData)
+          });
+
+          if (!response.ok) {
+              const errorData = await response.json();
+              throw new Error(errorData.error);
+          }
+
+          const responseData = await response.json();
+          console.log(responseData.message); // Log success message
+      } catch (error) {
+          console.error('Error decreasing stock:', error.message);
+      }
   }
 
 
   // LOGIC FOR THE PAYMENT REDIRECTION
 
-  // Processses go to payment fetch request and redirects
+  const storeMapIds = new Map([
+      ['M', 1],
+      ['L', 2],
+      ['XL', 3],
+  ]);
+
   const goToPaymentPage = async (formData) => {
     try {
       console.log(storeMapIds.get( size ));
       const response = await fetch('http://localhost:4000/create-checkout-session', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json', // Set Content-Type header
-        },
-        body: JSON.stringify({
-          items: [
-            { id: storeMapIds.get( size ) }
-          ],
-          formData
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({items: [{ id: storeMapIds.get( size ) }],
+                              formData
         }),
       });
   
@@ -286,6 +241,10 @@ const Checkout = () => {
       }
   
       const { url } = await response.json();
+      if (url.includes("http://localhost:3000/sucess")){
+        handlePurchase()
+        sendEmail()
+      }
       window.location = url;
     } catch (e) {
       console.error(e);
@@ -429,7 +388,7 @@ const Checkout = () => {
               Should any problems occur as a result of the customer's own actions (e.g. incorrectly provided data), the buyer is fully responsible for rectifying the problem, both financially and in terms of dealing with the transport company.<br /><br />
             </p>
             
-            <button className="modalbutton" id="modal-stay-button-info" onClick={helper_button}>
+            <button className="modalbutton" id="modal-stay-button-info" onClick={sendEmail}>
                 Understood
             </button>
           </div>

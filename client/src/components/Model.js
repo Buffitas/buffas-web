@@ -2,6 +2,14 @@ import React, { useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { useGLTF, PerspectiveCamera, OrbitControls } from '@react-three/drei';
 
+//     ____  __  __    ____   ____   ____    ____
+//    / __ \/\ \ \ \  / ___\ / ___\ / __ \  / ___\
+//   /\ \_\ \ \ \ \ \/\ \__//\ \__//\ \_\ \/\ \__/_
+//   \ \  __<\ \ \ \ \ \  __\ \  __\ \  __ \ \____ \
+//    \ \ \_\ \ \ \_\ \ \ \_/\ \ \_/\ \ \ \ \/____\ \
+//     \ \____/\ \____/\ \_\  \ \_\  \ \_\ \_\/\____/
+//      \/___/  \/___/  \/_/   \/_/   \/_/\/_/\/___/
+
 const MyModel = () => {
   const { scene } = useGLTF("/Cube-2.glb");
   const modelRef = useRef();

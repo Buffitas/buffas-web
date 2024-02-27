@@ -158,16 +158,30 @@ const transporter = nodemailer.createTransport({
 app.post('/send-email', (req, res) => {
   try {
 
-    const buyerMail = req.body.email;
+    const formData = req.body;
     
     // // Sending email to ourselves
     // const mailDetailsForUs = {
     //   from: MAIL,
     //   to: MAIL,
     //   subject: 'Order Confirmation',
-    //   text: 'Thank you very much for the shop.'
+    //   html: `
+    //       <div style="font-family: Arial, sans-serif; color: #333; background-color: #f9f9f9; padding: 20px;">
+    //           <h2 style="color: #007bff;">New purchase! </h2>
+    //           <p style="font-size: 16px;">Name:  ${formData.name}</p>
+    //           <p style="font-size: 16px;">Surrname:  ${formData.surname}</p>
+    //           <p style="font-size: 16px;">Email:  ${formData.email}</p>
+    //           <p style="font-size: 16px;">Country:  ${formData.country}</p>
+    //           <p style="font-size: 16px;">City:  ${formData.city}</p>
+    //           <p style="font-size: 16px;">Postcode:  ${formData.postcode}</p>
+    //           <p style="font-size: 16px;">Street:  ${formData.street}</p>
+    //           <p style="font-size: 16px;">Flat:  ${formData.flat}</p>
+    //           <p style="font-size: 16px;">Item_type:  ${formData.item_type}</p>
+    //           <p style="font-size: 16px;">Size:  ${formData.size}</p>
+    //       </div>
+    //   `
     // };
-    
+
     // transporter.sendMail(mailDetailsForUs, function(error, info) {
     //   if (error) {
     //     console.error('Error sending email to yourself:', error);
@@ -179,9 +193,26 @@ app.post('/send-email', (req, res) => {
     // Sending email to the customer
     const mailDetailsForBuyer = {
       from: MAIL,
-      to: buyerMail,
+      to: 'greatalvaro@gmail.com',
       subject: 'Order Confirmation',
-      text: 'Thank you very much for the shop.'
+      html: `
+          <div style="font-family: Arial, sans-serif; color: #333; background-color: #f9f9f9; padding: 20px;">
+              <h2 style="color: #007bff;">Thank you for your purchase! ${formData.name}</h2>
+              <p style="font-size: 16px;">Dear ${formData.name} ${formData.surname},</p>
+              <p style="font-size: 16px;">We wanted to take a moment to thank you for purchasing at BUFFAS. Your order has been received and is currently being processed.</p>
+              <p style="font-size: 16px;">Order Details:</p>
+              <ul style="font-size: 16px;">
+                  <li>Item type: Pilot Hoodie</li>
+                  <li>Size: ${formData.size}</li>
+                  <li>Order Number: $$$</li>
+                  <li>Order Date: $$$</li>
+                  <li>Estimated Delivery Date: $$$</li>
+              </ul>
+              <p style="font-size: 16px;">If you have any questions or concerns regarding your order, please don't hesitate to contact us.</p>
+              <p style="font-size: 16px;">Once again, thank you for your business!</p>
+              <img src="https://example.com/thank-you-image.jpg" alt="Thank You" style="max-width: 100%; margin-top: 20px;">
+          </div>
+      `
     };
     
     transporter.sendMail(mailDetailsForBuyer, function(error, info) {

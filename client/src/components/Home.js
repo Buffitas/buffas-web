@@ -6,6 +6,14 @@ import { FaMusic, FaNewspaper } from "react-icons/fa6";
 import { FaShoppingBag } from "react-icons/fa";
 import { SiVlcmediaplayer } from "react-icons/si";
 
+//     ____  __  __    ____   ____   ____    ____
+//    / __ \/\ \ \ \  / ___\ / ___\ / __ \  / ___\
+//   /\ \_\ \ \ \ \ \/\ \__//\ \__//\ \_\ \/\ \__/_
+//   \ \  __<\ \ \ \ \ \  __\ \  __\ \  __ \ \____ \
+//    \ \ \_\ \ \ \_\ \ \ \_/\ \ \_/\ \ \ \ \/____\ \
+//     \ \____/\ \____/\ \_\  \ \_\  \ \_\ \_\/\____/
+//      \/___/  \/___/  \/_/   \/_/   \/_/\/_/\/___/
+
 function Home() {
 
     const navigate = useNavigate();

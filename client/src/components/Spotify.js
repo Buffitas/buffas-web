@@ -1,8 +1,15 @@
 import React from 'react'
 import './css/Spotify.css'
 import { useNavigate } from 'react-router-dom';
-import Footer from './Footer';
 import { SiSpotify, SiApplemusic } from "react-icons/si";
+
+//     ____  __  __    ____   ____   ____    ____
+//    / __ \/\ \ \ \  / ___\ / ___\ / __ \  / ___\
+//   /\ \_\ \ \ \ \ \/\ \__//\ \__//\ \_\ \/\ \__/_
+//   \ \  __<\ \ \ \ \ \  __\ \  __\ \  __ \ \____ \
+//    \ \ \_\ \ \ \_\ \ \ \_/\ \ \_/\ \ \ \ \/____\ \
+//     \ \____/\ \____/\ \_\  \ \_\  \ \_\ \_\/\____/
+//      \/___/  \/___/  \/_/   \/_/   \/_/\/_/\/___/
 
 const Spotify = () => {
 
@@ -35,8 +42,6 @@ const Spotify = () => {
           </a>
         </button>
       </div>
-
-      <Footer />
     </div>
   )
 }

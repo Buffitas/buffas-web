@@ -2,6 +2,14 @@ import React from 'react';
 import './css/DataPrivacy.css';
 import { useNavigate, useLocation } from 'react-router-dom';
 
+//     ____  __  __    ____   ____   ____    ____
+//    / __ \/\ \ \ \  / ___\ / ___\ / __ \  / ___\
+//   /\ \_\ \ \ \ \ \/\ \__//\ \__//\ \_\ \/\ \__/_
+//   \ \  __<\ \ \ \ \ \  __\ \  __\ \  __ \ \____ \
+//    \ \ \_\ \ \ \_\ \ \ \_/\ \ \_/\ \ \ \ \/____\ \
+//     \ \____/\ \____/\ \_\  \ \_\  \ \_\ \_\/\____/
+//      \/___/  \/___/  \/_/   \/_/   \/_/\/_/\/___/
+
 const DataPrivacyEs = () => {
 
   const navigate = useNavigate();

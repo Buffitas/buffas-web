@@ -2,8 +2,15 @@ import React from 'react';
 import './css/Newsletter.css';
 import { useNavigate } from 'react-router-dom';
 import ReactPlayer from 'react-player'
-
 import video from  '../videos/video.mp4'
+
+//     ____  __  __    ____   ____   ____    ____
+//    / __ \/\ \ \ \  / ___\ / ___\ / __ \  / ___\
+//   /\ \_\ \ \ \ \ \/\ \__//\ \__//\ \_\ \/\ \__/_
+//   \ \  __<\ \ \ \ \ \  __\ \  __\ \  __ \ \____ \
+//    \ \ \_\ \ \ \_\ \ \ \_/\ \ \_/\ \ \ \ \/____\ \
+//     \ \____/\ \____/\ \_\  \ \_\  \ \_\ \_\/\____/
+//      \/___/  \/___/  \/_/   \/_/   \/_/\/_/\/___/
 
 const Newsletter = () => {
 
