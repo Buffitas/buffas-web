@@ -29,7 +29,7 @@ const Newsletter = () => {
               <h2 id='page-title' >
                 <span className="title-letter">O</span>
                 <span className="title-letter">u</span>
-                <span claclassNamess="title-letter">r</span>
+                <span className="title-letter">r</span>
                 <span >&nbsp;</span>
                 <span className="title-letter">N</span>
                 <span className="title-letter">e</span>

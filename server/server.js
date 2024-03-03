@@ -53,7 +53,7 @@ app.post("/create-checkout-session", async (req, res) => {
       success_url: CLIENT_URL + `/success?${new URLSearchParams(formData).toString()}`,
       cancel_url: CLIENT_URL + `/shop`,
     });
-
+    console.log('payemnt done');
     res.json({ url: session.url });
 
   } catch (e) {

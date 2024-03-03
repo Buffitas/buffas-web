@@ -1,10 +1,10 @@
-#small-title-success{
+.small-title-success{
     color: black;
     font-size: 23px;
     border-bottom: 20px;
 }
 
-#sucess-container{
+#success-container{
     margin-top: 40px;
     justify-content: center;
     display: flex;
